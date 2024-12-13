@@ -1,47 +1,48 @@
-const canvas = document.getElementById('shapeCanvas');
-const ctx = canvas.getContext('2d');
-const options = document.querySelectorAll('.option');
-const scoreDisplay = document.getElementById('score');
+const shapes = ['circle', 'square', 'triangle'];
 let score = 0;
+let currentTarget = '';
 
-canvas.width = 200;
-canvas.height = 200;
-
-const shapes = ['Circle', 'Square', 'Triangle', 'Rectangle'];
-let currentShape;
-
-function drawShape() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  currentShape = shapes[Math.floor(Math.random() * shapes.length)];
-  if (currentShape === 'Circle') {
-    ctx.beginPath();
-    ctx.arc(100, 100, 50, 0, Math.PI * 2);
-    ctx.fill();
-  } else if (currentShape === 'Square') {
-    ctx.fillRect(50, 50, 100, 100);
-  } else if (currentShape === 'Triangle') {
-    ctx.beginPath();
-    ctx.moveTo(100, 20);
-    ctx.lineTo(50, 150);
-    ctx.lineTo(150, 150);
-    ctx.closePath();
-    ctx.fill();
-  } else if (currentShape === 'Rectangle') {
-    ctx.fillRect(50, 70, 100, 50);
-  }
+function generateRandomShape() {
+    return shapes[Math.floor(Math.random() * shapes.length)];
 }
 
-options.forEach((button) => {
-  button.addEventListener('click', () => {
-    if (button.textContent === currentShape) {
-      score++;
-      alert('Correct!');
-    } else {
-      alert('Wrong! Try again.');
+function changeShape(elementId, shape) {
+    const element = document.getElementById(elementId);
+    element.style.backgroundColor = 'transparent';
+    element.style.clipPath = getClipPath(shape);
+    
+    if (currentTarget === shape) {
+        score++;
+        document.getElementById('scoreValue').textContent = score;
+        document.getElementById('message').textContent = 'Correct Match!';
+        setTimeout(resetGame, 1000);
     }
-    scoreDisplay.textContent = `Score: ${score}`;
-    drawShape();
-  });
-});
+}
 
-drawShape();
+function getClipPath(shape) {
+    switch(shape) {
+        case 'circle':
+            return 'circle(50% at center)';
+        case 'square':
+            return 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)';
+        case 'triangle':
+            return 'polygon(50% 0%, 0% 100%, 100% 100%)';
+    }
+}
+
+function resetGame() {
+    const targetShape = document.getElementById('targetShape');
+    const playerShape = document.getElementById('playerShape');
+    
+    currentTarget = generateRandomShape();
+    targetShape.style.clipPath = getClipPath(currentTarget);
+    targetShape.style.backgroundColor = 'blue';
+    
+    playerShape.style.clipPath = 'none';
+    playerShape.style.backgroundColor = 'red';
+    
+    document.getElementById('message').textContent = 'Match the shape!';
+}
+
+// Initialize the game
+resetGame();
