@@ -1,10 +1,25 @@
-<div id="game">
-  <canvas id="shapeCanvas"></canvas>
-  <div id="options">
-    <button class="option">Circle</button>
-    <button class="option">Square</button>
-    <button class="option">Triangle</button>
-    <button class="option">Rectangle</button>
-  </div>
-  <p id="score">Score: 0</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Geometric Shape Shifter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>Geometric Shape Shifter</h1>
+        <div id="score">Score: <span id="scoreValue">0</span></div>
+        <div id="message"></div>
+        <div id="shape-area">
+            <div id="targetShape" class="shape"></div>
+            <div id="playerShape" class="shape"></div>
+        </div>
+        <div id="controls">
+            <button onclick="changeShape('playerShape', 'circle')">Circle</button>
+            <button onclick="changeShape('playerShape', 'square')">Square</button>
+            <button onclick="changeShape('playerShape', 'triangle')">Triangle</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
