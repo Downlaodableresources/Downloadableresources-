@@ -55,7 +55,7 @@ footer {
     width: 100%;
     max-width: 800px;
     padding: 12px;
-    background-color: #1a73e8;
+    background-color: #28a745; 
     color: white;
     border: none;
     border-radius: 5px;
@@ -68,5 +68,5 @@ footer {
 }
 
 .return-home-btn:hover {
-    background-color: #1557b0;
+    background-color: #218838; 
 }
